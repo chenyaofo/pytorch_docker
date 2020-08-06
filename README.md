@@ -2,7 +2,7 @@
 
 ## Pytorch docker image
 
-This image is built with pytorch and some common used deep learning library.
+This [image](https://hub.docker.com/r/chenyaofo/pytorch) is built with pytorch and some common used deep learning library.
 
 ```
 docker pull chenyaofo/pytorch:1.6_cu101

@@ -28,5 +28,6 @@ RUN wget --quiet https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Minicon
 
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
     /opt/conda/bin/pip config set global.index-url https://mirrors.cloud.tencent.com/pypi/simple && \
-    $PIP_INSTALL ipdb tb-nightly ipython graphviz scipy numpy scikit-learn pandas matplotlib && \
-    $PIP_INSTALL torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+    $PIP_INSTALL ipdb tb-nightly ipython graphviz scipy numpy scikit-learn pandas matplotlib jupyter && \
+    $PIP_INSTALL torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html && \
+    $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist nvidia-dali-cuda100

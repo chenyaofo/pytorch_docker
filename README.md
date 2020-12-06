@@ -14,7 +14,7 @@ docker pull chenyaofo/pytorch:1.7_py38_cu101
 docker pull chenyaofo/pytorch:1.7_py38_cu110
 ```
 
-### Pull from Aliyun docker register
+### Pull from Aliyun docker registry
 
 ```
 docker pull registry.cn-shenzhen.aliyuncs.com/chenyaofo/pytorch:1.7_py38_cu101

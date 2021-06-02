@@ -1,0 +1,21 @@
+    {{job_name}}:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Free disk space
+              run: |
+                df -h
+                sudo apt-get remove -y '^ghc-8.*' azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell
+                sudo apt-get autoremove -y
+                sudo apt-get clean
+                sudo swapoff -a
+                sudo rm -f /swapfile
+                docker rmi $(docker image ls -aq)
+                df -h
+            - name: Build docker image
+              run: docker build -t {{image_name}}:{{image_tag}} -f {{dockerfile}} {{workspace}}
+            - name: Deploy docker image
+              run: |
+                {% raw %}docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
+{% endraw %}
+                docker push {{image_name}}:{{image_tag}}

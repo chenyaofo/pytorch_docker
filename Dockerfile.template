@@ -1,0 +1,31 @@
+FROM nvidia/cuda:{{cuda_version}}-base-ubuntu{{ubuntu_version}}
+
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+ENV PATH /opt/conda/bin:$PATH
+RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
+    GIT_CLONE="git clone --depth 10" && \
+    cat /etc/apt/sources.list && \
+    rm -rf /var/lib/apt/lists/* \
+           /etc/apt/sources.list.d/cuda.list \
+           /etc/apt/sources.list.d/nvidia-ml.list && \
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive $APT_INSTALL {{apt_packages}} && \
+    apt-get clean
+
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-{{miniconda_version}}-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc && \
+    find /opt/conda/ -follow -type f -name '*.a' -delete && \
+    find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
+    /opt/conda/bin/conda clean -afy
+
+RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
+    $PIP_INSTALL {{pip_package}} && \
+    $PIP_INSTALL torch=={{torch_version}} torchvision=={{torchvision_version}} -f https://download.pytorch.org/whl/torch_stable.html && \
+{% if dali_package is not none %}
+    $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade {{dali_package}}
+{% endif %}
+    echo 'Done!'

@@ -2,7 +2,7 @@ import os
 from jinja2 import Template
 
 cuda_versions = ['10.2', '11.3.0']
-miniconda_version = 'py38_4.9.2'
+miniconda_version = 'py37_4.9.2'
 py_version, *_ = miniconda_version.split("_")
 
 torch_base_version = "1.8.1"

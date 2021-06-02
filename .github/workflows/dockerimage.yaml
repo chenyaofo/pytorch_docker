@@ -8,7 +8,7 @@ on:
 jobs:
 
 
-    Dockerfile-pytorch-py38-cu102:
+    Dockerfile-pytorch-py37-cu102:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
@@ -23,13 +23,13 @@ jobs:
                 docker rmi $(docker image ls -aq)
                 df -h
             - name: Build docker image
-              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py38-cu102 -f docker/Dockerfile.pytorch-py38-cu102 workspace
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py37-cu102 -f docker/Dockerfile.pytorch-py37-cu102 workspace
             - name: Deploy docker image
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-                docker push ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py38-cu102
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py37-cu102
 
-    Dockerfile-pytorch-py38-cu102-dali:
+    Dockerfile-pytorch-py37-cu102-dali:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
@@ -44,13 +44,13 @@ jobs:
                 docker rmi $(docker image ls -aq)
                 df -h
             - name: Build docker image
-              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py38-cu102-dali -f docker/Dockerfile.pytorch-py38-cu102-dali workspace
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py37-cu102-dali -f docker/Dockerfile.pytorch-py37-cu102-dali workspace
             - name: Deploy docker image
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-                docker push ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py38-cu102-dali
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py37-cu102-dali
 
-    Dockerfile-pytorch-py38-cu111:
+    Dockerfile-pytorch-py37-cu111:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
@@ -65,13 +65,13 @@ jobs:
                 docker rmi $(docker image ls -aq)
                 df -h
             - name: Build docker image
-              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py38-cu111 -f docker/Dockerfile.pytorch-py38-cu111 workspace
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py37-cu111 -f docker/Dockerfile.pytorch-py37-cu111 workspace
             - name: Deploy docker image
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-                docker push ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py38-cu111
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py37-cu111
 
-    Dockerfile-pytorch-py38-cu111-dali:
+    Dockerfile-pytorch-py37-cu111-dali:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
@@ -86,8 +86,8 @@ jobs:
                 docker rmi $(docker image ls -aq)
                 df -h
             - name: Build docker image
-              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py38-cu111-dali -f docker/Dockerfile.pytorch-py38-cu111-dali workspace
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py37-cu111-dali -f docker/Dockerfile.pytorch-py37-cu111-dali workspace
             - name: Deploy docker image
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-                docker push ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py38-cu111-dali
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.8.1-py37-cu111-dali

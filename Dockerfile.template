@@ -26,6 +26,6 @@ RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
     $PIP_INSTALL {{pip_package}} && \
     $PIP_INSTALL torch=={{torch_version}} torchvision=={{torchvision_version}} -f https://download.pytorch.org/whl/torch_stable.html && \
 {% if dali_package is not none %}
-    $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade {{dali_package}}
+    $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade {{dali_package}} && \
 {% endif %}
     echo 'Done!'

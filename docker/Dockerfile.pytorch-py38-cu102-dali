@@ -25,5 +25,5 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py38_4.9.2-Linux
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
     $PIP_INSTALL ipdb tb-nightly graphviz scipy && \
     $PIP_INSTALL torch==1.8.1+cu102 torchvision==0.9.1+cu102 -f https://download.pytorch.org/whl/torch_stable.html && \
-    $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade nvidia-dali-cu100
+    $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade nvidia-dali-cu100 && \
     echo 'Done!'

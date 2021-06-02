@@ -18,4 +18,4 @@
               run: |
                 {% raw %}docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
 {% endraw %}
-                docker push {{image_name}}:{{image_tag}}
+                docker push {% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{image_name}}:{{image_tag}}

@@ -40,7 +40,7 @@ with open(".github/workflows/dockerimage.yaml", "w") as workflows:
                 ]),
                 torch_version=torch_base_version + '+' + ('cu102' if cuda_version == "10.2" else 'cu111'),
                 torchvision_version='0.9.1' + '+' + ('cu102' if cuda_version == "10.2" else 'cu111'),
-                dali_package=None if not use_dali else 'nvidia-dali-cu100' if cuda_version == "10.2" else 'nvidia-dali-u110'
+                dali_package=None if not use_dali else 'nvidia-dali-cu100' if cuda_version == "10.2" else 'nvidia-dali-cu110'
             )
             rendered_content = Template(open('Dockerfile.template').read(), trim_blocks=True).render(**build_vars)
 

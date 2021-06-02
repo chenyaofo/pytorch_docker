@@ -13,7 +13,7 @@
                 docker rmi $(docker image ls -aq)
                 df -h
             - name: Build docker image
-              run: docker build -t {{image_name}}:{{image_tag}} -f {{dockerfile}} {{workspace}}
+              run: docker build -t {% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{image_name}}:{{image_tag}} -f {{dockerfile}} {{workspace}}
             - name: Deploy docker image
               run: |
                 {% raw %}docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}

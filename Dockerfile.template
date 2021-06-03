@@ -1,7 +1,9 @@
 FROM nvidia/cuda:{{cuda_version}}-base-ubuntu{{ubuntu_version}}
 
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-ENV PATH /opt/conda/bin:$PATH
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 \
+    PATH /opt/conda/bin:$PATH \
+    TZ=Asia/Shanghai
+
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     GIT_CLONE="git clone --depth 10" && \
     cat /etc/apt/sources.list && \
@@ -9,8 +11,12 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
            /etc/apt/sources.list.d/cuda.list \
            /etc/apt/sources.list.d/nvidia-ml.list && \
     apt-get update && \
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL {{apt_packages}} && \
+    DEBIAN_FRONTEND=noninteractive $APT_INSTALL tzdata {{apt_packages}} && \
     apt-get clean
+
+RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime && \
+    echo ${TZ} > /etc/timezone && \
+    dpkg-reconfigure --frontend noninteractive tzdata
 
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-{{miniconda_version}}-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
@@ -28,4 +34,10 @@ RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
 {% if dali_package is not none %}
     $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade {{dali_package}} && \
 {% endif %}
-    echo 'Done!'
+    echo 'PIP Install Done!'
+
+RUN CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
+{% for pkg, channel in conda_packages %}
+    $CONDA_INSTALL -c {{channel}} {{pkg}} && \
+{% endfor %}
+    echo 'Conda Install Done!'

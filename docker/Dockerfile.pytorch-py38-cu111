@@ -1,7 +1,9 @@
 FROM nvidia/cuda:11.3.0-base-ubuntu20.04
 
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-ENV PATH /opt/conda/bin:$PATH
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 \
+    PATH /opt/conda/bin:$PATH \
+    TZ=Asia/Shanghai
+
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     GIT_CLONE="git clone --depth 10" && \
     cat /etc/apt/sources.list && \
@@ -9,8 +11,12 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
            /etc/apt/sources.list.d/cuda.list \
            /etc/apt/sources.list.d/nvidia-ml.list && \
     apt-get update && \
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL git wget vim htop openssh-server graphviz && \
+    DEBIAN_FRONTEND=noninteractive $APT_INSTALL tzdata git wget vim htop openssh-server graphviz && \
     apt-get clean
+
+RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime && \
+    echo ${TZ} > /etc/timezone && \
+    dpkg-reconfigure --frontend noninteractive tzdata
 
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py38_4.9.2-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
@@ -23,6 +29,10 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py38_4.9.2-Linux
     /opt/conda/bin/conda clean -afy
 
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
-    $PIP_INSTALL ipdb tb-nightly graphviz scipy && \
+    $PIP_INSTALL ipdb tb-nightly graphviz scipy cython && \
     $PIP_INSTALL torch==1.8.1+cu111 torchvision==0.9.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html && \
-    echo 'Done!'
+    echo 'PIP Install Done!'
+
+RUN CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
+    $CONDA_INSTALL -c conda-forge pycocotools && \
+    echo 'Conda Install Done!'

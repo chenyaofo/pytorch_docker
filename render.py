@@ -33,11 +33,15 @@ with open(".github/workflows/dockerimage.yaml", "w") as workflows:
                 ]),
                 miniconda_version='py38_4.9.2',
                 pip_package=' '.join([
+                    'cython',
                     'ipdb',
                     'tb-nightly',
                     'graphviz',
-                    'scipy'
+                    'scipy',
                 ]),
+                conda_packages=[
+                    ('pycocotools', 'conda-forge'),
+                ],
                 torch_version=torch_base_version + '+' + ('cu102' if cuda_version == "10.2" else 'cu111'),
                 torchvision_version='0.9.1' + '+' + ('cu102' if cuda_version == "10.2" else 'cu111'),
                 dali_package=None if not use_dali else 'nvidia-dali-cuda100' if cuda_version == "10.2" else 'nvidia-dali-cuda110'

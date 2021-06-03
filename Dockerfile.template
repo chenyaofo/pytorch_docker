@@ -26,6 +26,11 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-{{miniconda_vers
     echo "conda activate base" >> ~/.bashrc && \
     find /opt/conda/ -follow -type f -name '*.a' -delete && \
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
+    CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
+{% for pkg, channel in conda_packages %}
+    $CONDA_INSTALL -c {{channel}} {{pkg}} && \
+{% endfor %}
+    echo 'Conda Install Done!' && \
     /opt/conda/bin/conda clean -afy
 
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
@@ -35,9 +40,3 @@ RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
     $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade {{dali_package}} && \
 {% endif %}
     echo 'PIP Install Done!'
-
-RUN CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
-{% for pkg, channel in conda_packages %}
-    $CONDA_INSTALL -c {{channel}} {{pkg}} && \
-{% endfor %}
-    echo 'Conda Install Done!'

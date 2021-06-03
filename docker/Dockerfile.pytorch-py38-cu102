@@ -11,7 +11,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
            /etc/apt/sources.list.d/cuda.list \
            /etc/apt/sources.list.d/nvidia-ml.list && \
     apt-get update && \
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL tzdata git wget vim htop openssh-server graphviz && \
+    DEBIAN_FRONTEND=noninteractive $APT_INSTALL tzdata git wget vim htop openssh-server && \
     apt-get clean
 
 RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime && \
@@ -26,13 +26,15 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py38_4.9.2-Linux
     echo "conda activate base" >> ~/.bashrc && \
     find /opt/conda/ -follow -type f -name '*.a' -delete && \
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
+    CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
+    $CONDA_INSTALL -c conda-forge pycocotools && \
+    $CONDA_INSTALL -c conda-forge ipdb && \
+    $CONDA_INSTALL -c anaconda graphviz && \
+    $CONDA_INSTALL -c anaconda scipy && \
+    echo 'Conda Install Done!' && \
     /opt/conda/bin/conda clean -afy
 
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
-    $PIP_INSTALL cython ipdb tb-nightly graphviz scipy && \
+    $PIP_INSTALL tb-nightly && \
     $PIP_INSTALL torch==1.8.1+cu102 torchvision==0.9.1+cu102 -f https://download.pytorch.org/whl/torch_stable.html && \
     echo 'PIP Install Done!'
-
-RUN CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
-    $CONDA_INSTALL -c conda-forge pycocotools && \
-    echo 'Conda Install Done!'

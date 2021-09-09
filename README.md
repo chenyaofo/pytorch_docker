@@ -49,9 +49,9 @@ docker pull chenyaofo/pytorch:1.9.0-py38-cu111
 
 If you are in China, you can using the baidubce to accelerate the pulling
 ```
-mirror.baidubce.com/chenyaofo/pytorch:1.9.0-py38-cu111
+docker pull mirror.baidubce.com/chenyaofo/pytorch:1.9.0-py38-cu111
 ```
 or using aliyun
 ```
-registry.cn-guangzhou.aliyuncs.com/chenyaofo/pytorch:1.9.0-py38-cu111
+docker pull registry.cn-guangzhou.aliyuncs.com/chenyaofo/pytorch:1.9.0-py38-cu111
 ```

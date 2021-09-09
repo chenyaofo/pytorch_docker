@@ -67,7 +67,7 @@ def config2dockerfile(config, tag=None):
         raise ValueError(f'''Can not find cuda version {config["CUDA_VERSION"]} for pytorch {config["PYTORCH_VERSION"]}''')
 
     if tag is None:
-        tag = f'''{config["PYTORCH_VERSION"]}-cu{config["PYTORCH_CUDA_VERSION"].replace(".","")}{'-dali' if config["IS_INSTALL_DALI"] else ''}'''
+        tag = f'''{config["PYTORCH_VERSION"]}-py{config["PYTHON_VERSION"].replace(".","")}-cu{config["PYTORCH_CUDA_VERSION"].replace(".","")}{'-dali' if config["IS_INSTALL_DALI"] else ''}'''
 
     extra_pytorch_find_url = "" if config["CUDA_VERSION"] == "10.2" else "-f https://download.pytorch.org/whl/torch_stable.html"
 

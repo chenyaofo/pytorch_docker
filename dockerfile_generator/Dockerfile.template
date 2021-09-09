@@ -1,0 +1,48 @@
+FROM nvidia/cuda:{{CUDA_VERSION}}-base-ubuntu{{UBUNTU_VERSION}}
+
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 \
+    PATH=/opt/conda/bin:$PATH \
+    TZ={{TIMEZONE}}
+
+RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
+    GIT_CLONE="git clone --depth 10" && \
+    cat /etc/apt/sources.list && \
+    rm -rf /var/lib/apt/lists/* \
+           /etc/apt/sources.list.d/cuda.list \
+           /etc/apt/sources.list.d/nvidia-ml.list && \
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive $APT_INSTALL tzdata {% for pkg in APT_PACKAGES %}{{pkg}} {% endfor %}&& \
+    apt-get clean
+
+RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime && \
+    echo ${TZ} > /etc/timezone && \
+    dpkg-reconfigure --frontend noninteractive tzdata
+
+RUN wget --quiet {{BASE_INSTALLER}} -O ~/installer.sh && \
+    /bin/bash ~/installer.sh -b -p /opt/conda && \
+    rm ~/installer.sh && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc && \
+    find /opt/conda/ -follow -type f -name '*.a' -delete && \
+    find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
+    CONDA_INSTALL="/opt/conda/bin/mamba install --freeze-installed -y" && \
+    $CONDA_INSTALL python={{PYTHON_VERSION}} && \
+    /opt/conda/bin/conda clean -afy
+
+RUN CONDA_INSTALL="/opt/conda/bin/mamba install --freeze-installed -y" && \
+    $CONDA_INSTALL -c pytorch pytorch=={{PYTORCH_VERSION}} {{ 'torchvision=='~TORCHVISION_VERSION if IS_INSTALL_TORCHVISION else '' }} {{ 'torchaudio=='~TORCHAUDIO_VERSION if IS_INSTALL_TORCHAUDIO else '' }} cudatoolkit={{PYTORCH_CUDA_VERSION}}
+
+RUN CONDA_INSTALL="/opt/conda/bin/mamba install --freeze-installed -y" && \
+{% for channel, pkgs in CONDA_PACKAGES.items() %}
+    $CONDA_INSTALL -c {{channel}} {% for pkg in pkgs %}{{pkg}} {% endfor %} && \
+{% endfor %}
+    echo 'Conda Install Done!'
+
+RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
+    $PIP_INSTALL {% for pkg in PIP_PACKAGES %}{{pkg}} {% endfor %} && \
+{% if IS_INSTALL_DALI %}
+    $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade {{DALI}} && \
+{% endif %}
+    echo 'PIP Install Done!'
+

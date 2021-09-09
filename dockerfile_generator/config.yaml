@@ -1,0 +1,45 @@
+BASE_INSTALLER:
+  https://github.com/conda-forge/miniforge/releases/download/4.10.3-5/Mambaforge-4.10.3-5-Linux-x86_64.sh
+
+TIMEZONE:
+  Asia/Shanghai # all avaiable time zones can be found by using command `timedatectl list-timezones`
+
+CUDA_VERSION:
+  "11.4"  # selcted from [10.2, 11.0, 11.1, 11.2, 11.3, 11.4]
+PYTHON_VERSION:
+  "3.8"  # selected from [3.6, 3.7, 3.8, 3.9]
+PYTORCH_VERSION:
+  "1.9.0"  # selected from [1.5.0, 1.5.1, 1.6.0, 1.7.0, 1.7.1, 1.8.0, 1.9.0]
+
+IS_INSTALL_TORCHVISION:
+  TRUE # whether install torchvision
+
+IS_INSTALL_TORCHAUDIO:
+  TRUE # whether install torchaudio
+
+IS_INSTALL_DALI:
+  TRUE # whether install DALI, note that DALI will be installed with the lastest version
+
+# packages installed via apt
+APT_PACKAGES:
+  - git
+  - wget
+  - vim
+  - htop
+  - openssh-server
+
+# packages installed via pip
+PIP_PACKAGES:
+  - tb-nightly
+
+# packages installed via conda, here we use the dict key to refer the channel
+CONDA_PACKAGES:
+  conda-forge:
+    - pycocotools
+    - graphviz
+    - ipdb
+    - scipy
+    - scikit-learn
+    - pandas
+    
+

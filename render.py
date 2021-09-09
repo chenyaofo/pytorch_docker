@@ -1,11 +1,11 @@
 import os
 from jinja2 import Template
 
-cuda_versions = ['10.2', '11.3.0']
+cuda_versions = ['10.2', '11.4.1']
 miniconda_version = 'py38_4.9.2'
 py_version, *_ = miniconda_version.split("_")
 
-torch_base_version = "1.8.1"
+torch_base_version = "1.9.0"
 
 prefix = '''
 name: PyTorch Docker Image CI
@@ -31,7 +31,7 @@ with open(".github/workflows/dockerimage.yaml", "w") as workflows:
                     'openssh-server',
                     'graphviz',
                 ]),
-                miniconda_version='py38_4.9.2',
+                miniconda_version=miniconda_version,
                 pip_package=' '.join([
                     'cython',
                     'ipdb',
@@ -43,8 +43,8 @@ with open(".github/workflows/dockerimage.yaml", "w") as workflows:
                     ('pycocotools', 'conda-forge'),
                 ],
                 torch_version=torch_base_version + '+' + ('cu102' if cuda_version == "10.2" else 'cu111'),
-                torchvision_version='0.9.1' + '+' + ('cu102' if cuda_version == "10.2" else 'cu111'),
-                dali_package=None if not use_dali else 'nvidia-dali-cuda100' if cuda_version == "10.2" else 'nvidia-dali-cuda110'
+                torchvision_version='0.10.0' + '+' + ('cu102' if cuda_version == "10.2" else 'cu111'),
+                dali_package=None if not use_dali else 'nvidia-dali-cuda102' if cuda_version == "10.2" else 'nvidia-dali-cuda110'
             )
             rendered_content = Template(open('Dockerfile.template').read(), trim_blocks=True).render(**build_vars)
 

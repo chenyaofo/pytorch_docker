@@ -30,7 +30,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py38_4.9.2-Linux
 
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
     $PIP_INSTALL cython ipdb tb-nightly graphviz scipy && \
-    $PIP_INSTALL torch==1.8.1+cu102 torchvision==0.9.1+cu102 -f https://download.pytorch.org/whl/torch_stable.html && \
+    $PIP_INSTALL torch==1.9.0+cu102 torchvision==0.10.0+cu102 -f https://download.pytorch.org/whl/torch_stable.html && \
     echo 'PIP Install Done!'
 
 RUN CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \

@@ -111,7 +111,7 @@ if __name__ == "__main__":
         workflows.write(prefix)
         for job in jobs:
             build_vars = dict(
-                JOB_NAME="Dockfile-"+job,
+                JOB_NAME="Dockerfile-"+job.replace(".","_"),
                 IMAGE_NAME="pytorch",
                 IMAGE_TAG=job,
                 dockerfile=os.path.join(os.path.join("dockerfile", f"Dockerfile-{job}")),

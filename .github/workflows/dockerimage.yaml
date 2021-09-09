@@ -4,7 +4,7 @@ on:
     tags:
     - v*
 jobs:
-    Dockfile-1.9.0-py38-cu102:
+    Dockerfile-1_9_0-py38-cu102:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master

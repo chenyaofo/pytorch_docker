@@ -72,6 +72,13 @@ config["DALI"] = "nvidia-dali-cuda102" if "10." in config["CUDA_VERSION"] else "
 rendered_content = Template(open('Dockerfile.template').read(), trim_blocks=True).render(**config)
 print(rendered_content)
 
+with open(os.path.join("Dockerfile"), "w") as f:
+    f.write(rendered_content)
+
+
+print(f'''git tag docker-build-{config["PYTORCH_VERSION"]}-cu{config["PYTORCH_CUDA_VERSION"].replace(".","")}\
+{'-dali' if config["IS_INSTALL_DALI"] else ''} && git push --tags''')
+
 # cuda_versions = ['10.2', '11.4.1']
 # miniconda_version = 'py38_4.9.2'
 # py_version, *_ = miniconda_version.split("_")

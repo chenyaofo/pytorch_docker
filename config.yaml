@@ -1,5 +1,5 @@
 BASE_INSTALLER:
-  https://github.com/conda-forge/miniforge/releases/download/4.10.3-5/Mambaforge-4.10.3-5-Linux-x86_64.sh
+  https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh
 
 TIMEZONE:
   Asia/Shanghai # all avaiable time zones can be found by using command `timedatectl list-timezones`
@@ -31,15 +31,13 @@ APT_PACKAGES:
 # packages installed via pip
 PIP_PACKAGES:
   - tb-nightly
+  - ipdb
+  - scipy
+  - scikit-learn
+  - pandas
 
 # packages installed via conda, here we use the dict key to refer the channel
 CONDA_PACKAGES:
   conda-forge:
     - pycocotools
     - graphviz
-    - ipdb
-    - scipy
-    - scikit-learn
-    - pandas
-    
-

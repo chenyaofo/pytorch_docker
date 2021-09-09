@@ -1,0 +1,27 @@
+    {{JOB_NAME}}:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Free disk space
+              run: |
+                df -h
+                sudo apt-get remove -y '^ghc-8.*' azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell
+                sudo apt-get autoremove -y
+                sudo apt-get clean
+                sudo swapoff -a
+                sudo rm -f /swapfile
+                docker rmi $(docker image ls -aq)
+                df -h
+            - name: Build docker image
+              run: docker build -t {% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{IMAGE_NAME}}:{{IMAGE_TAG}} -f {{dockerfile}} {{workspace}}
+            - name: Deploy docker image
+              run: |
+                {% raw %}docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
+{% endraw %}
+                docker push {% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{IMAGE_NAME}}:{{IMAGE_TAG}}
+                docker logout
+                {% raw %}docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-guangzhou.aliyuncs.com
+{% endraw %}
+                docker tag {% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{IMAGE_NAME}}:{{IMAGE_TAG}} registry.cn-guangzhou.aliyuncs.com/{% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{IMAGE_NAME}}:{{IMAGE_TAG}}
+                docker push registry.cn-guangzhou.aliyuncs.com/{% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{IMAGE_NAME}}:{{IMAGE_TAG}}
+                docker logout registry.cn-guangzhou.aliyuncs.com

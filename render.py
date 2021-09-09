@@ -100,8 +100,8 @@ if __name__ == "__main__":
     os.system("rm -rf dockerfile")
     os.makedirs("dockerfile", exist_ok=True)
     jobs = []
-    for cuda_version in ["10.2"]:
-        for is_install_dali in [False]:
+    for cuda_version in ["10.2", "11.4"]:
+        for is_install_dali in [False, True]:
             c = copy.deepcopy(config)
             c["CUDA_VERSION"] = cuda_version
             c["IS_INSTALL_DALI"] = is_install_dali
@@ -111,7 +111,7 @@ if __name__ == "__main__":
         workflows.write(prefix)
         for job in jobs:
             build_vars = dict(
-                JOB_NAME="Dockerfile-"+job.replace(".","_"),
+                JOB_NAME="Dockerfile-"+job.replace(".", "_"),
                 IMAGE_NAME="pytorch",
                 IMAGE_TAG=job,
                 dockerfile=os.path.join(os.path.join("dockerfile", f"Dockerfile-{job}")),

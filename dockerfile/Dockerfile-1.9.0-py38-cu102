@@ -35,6 +35,6 @@ RUN CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
     echo 'Conda Install Done!'
 
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
-    $PIP_INSTALL pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0  && \
+    $PIP_INSTALL torch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0  && \
     $PIP_INSTALL tb-nightly ipdb scipy scikit-learn pandas  && \
     echo 'PIP Install Done!'

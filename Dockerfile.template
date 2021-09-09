@@ -37,7 +37,7 @@ RUN CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
     echo 'Conda Install Done!'
 
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
-    $PIP_INSTALL pytorch=={{PYTORCH_VERSION}} {{ 'torchvision=='~TORCHVISION_VERSION if IS_INSTALL_TORCHVISION else '' }} {{ 'torchaudio=='~TORCHAUDIO_VERSION if IS_INSTALL_TORCHAUDIO else '' }} {{EXTRA_PYTORCH_FIND_URL}} && \
+    $PIP_INSTALL torch=={{PYTORCH_VERSION}} {{ 'torchvision=='~TORCHVISION_VERSION if IS_INSTALL_TORCHVISION else '' }} {{ 'torchaudio=='~TORCHAUDIO_VERSION if IS_INSTALL_TORCHAUDIO else '' }} {{EXTRA_PYTORCH_FIND_URL}} && \
 {% if IS_INSTALL_DALI %}
     $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade {{DALI}} && \
 {% endif %}

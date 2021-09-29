@@ -9,7 +9,7 @@ CUDA_VERSION:
 PYTHON_VERSION:
   "3.8"  # selected from [3.6, 3.7, 3.8, 3.9]
 PYTORCH_VERSION:
-  "1.9.0"  # selected from [1.5.0, 1.5.1, 1.6.0, 1.7.0, 1.7.1, 1.8.0, 1.9.0]
+  "1.9.1"  # selected from [1.5.0, 1.5.1, 1.6.0, 1.7.0, 1.7.1, 1.8.0, 1.9.0]
 
 IS_INSTALL_TORCHVISION:
   TRUE # whether install torchvision
@@ -27,6 +27,8 @@ APT_PACKAGES:
   - vim
   - htop
   - openssh-server
+  - rsync
+  - fio
 
 # packages installed via pip
 PIP_PACKAGES:

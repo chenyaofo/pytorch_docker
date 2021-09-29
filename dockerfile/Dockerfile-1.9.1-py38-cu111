@@ -11,7 +11,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
            /etc/apt/sources.list.d/cuda.list \
            /etc/apt/sources.list.d/nvidia-ml.list && \
     apt-get update && \
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL tzdata git wget vim htop openssh-server && \
+    DEBIAN_FRONTEND=noninteractive $APT_INSTALL tzdata git wget vim htop openssh-server rsync fio && \
     apt-get clean
 
 RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime && \
@@ -35,7 +35,6 @@ RUN CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
     echo 'Conda Install Done!'
 
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \
-    $PIP_INSTALL torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html && \
-    $PIP_INSTALL --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade nvidia-dali-cuda110 && \
+    $PIP_INSTALL torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html && \
     $PIP_INSTALL tb-nightly ipdb scipy scikit-learn pandas  && \
     echo 'PIP Install Done!'

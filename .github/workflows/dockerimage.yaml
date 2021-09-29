@@ -4,7 +4,7 @@ on:
     tags:
     - v*
 jobs:
-    Dockerfile-1_9_0-py38-cu102:
+    Dockerfile-1_9_1-py38-cu102:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
@@ -19,18 +19,18 @@ jobs:
                 docker rmi $(docker image ls -aq)
                 df -h
             - name: Build docker image
-              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102 -f dockerfile/Dockerfile-1.9.0-py38-cu102 workspace
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu102 -f dockerfile/Dockerfile-1.9.1-py38-cu102 workspace
             - name: Deploy docker image
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-                docker push ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu102
                 docker logout
                 docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-guangzhou.aliyuncs.com
-                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102 registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102
-                docker push registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu102 registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu102
+                docker push registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu102
                 docker logout registry.cn-guangzhou.aliyuncs.com
 
-    Dockerfile-1_9_0-py38-cu102-dali:
+    Dockerfile-1_9_1-py38-cu102-dali:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
@@ -45,18 +45,18 @@ jobs:
                 docker rmi $(docker image ls -aq)
                 df -h
             - name: Build docker image
-              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102-dali -f dockerfile/Dockerfile-1.9.0-py38-cu102-dali workspace
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu102-dali -f dockerfile/Dockerfile-1.9.1-py38-cu102-dali workspace
             - name: Deploy docker image
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-                docker push ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102-dali
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu102-dali
                 docker logout
                 docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-guangzhou.aliyuncs.com
-                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102-dali registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102-dali
-                docker push registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102-dali
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu102-dali registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu102-dali
+                docker push registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu102-dali
                 docker logout registry.cn-guangzhou.aliyuncs.com
 
-    Dockerfile-1_9_0-py38-cu111:
+    Dockerfile-1_9_1-py38-cu111:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
@@ -71,18 +71,18 @@ jobs:
                 docker rmi $(docker image ls -aq)
                 df -h
             - name: Build docker image
-              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111 -f dockerfile/Dockerfile-1.9.0-py38-cu111 workspace
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu111 -f dockerfile/Dockerfile-1.9.1-py38-cu111 workspace
             - name: Deploy docker image
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-                docker push ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu111
                 docker logout
                 docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-guangzhou.aliyuncs.com
-                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111 registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111
-                docker push registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu111 registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu111
+                docker push registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu111
                 docker logout registry.cn-guangzhou.aliyuncs.com
 
-    Dockerfile-1_9_0-py38-cu111-dali:
+    Dockerfile-1_9_1-py38-cu111-dali:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
@@ -97,13 +97,13 @@ jobs:
                 docker rmi $(docker image ls -aq)
                 df -h
             - name: Build docker image
-              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111-dali -f dockerfile/Dockerfile-1.9.0-py38-cu111-dali workspace
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu111-dali -f dockerfile/Dockerfile-1.9.1-py38-cu111-dali workspace
             - name: Deploy docker image
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-                docker push ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111-dali
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu111-dali
                 docker logout
                 docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-guangzhou.aliyuncs.com
-                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111-dali registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111-dali
-                docker push registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111-dali
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu111-dali registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu111-dali
+                docker push registry.cn-guangzhou.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.1-py38-cu111-dali
                 docker logout registry.cn-guangzhou.aliyuncs.com

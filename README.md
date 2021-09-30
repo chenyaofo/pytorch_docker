@@ -11,6 +11,8 @@ wget
 vim
 htop
 openssh-server
+rsync
+fio
 ```
 
 and following packages via pypi
@@ -39,6 +41,10 @@ The available tags are
 1.9.0-py38-cu102-dali
 1.9.0-py38-cu111
 1.9.0-py38-cu111-dali
+1.9.1-py38-cu102
+1.9.1-py38-cu102-dali
+1.9.1-py38-cu111
+1.9.1-py38-cu111-dali
 ```
 
 You can pull the image from DockerHub using

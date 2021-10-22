@@ -14,6 +14,7 @@ CUDA_VERSION_MAPPING = {
 }
 
 PYTORCH_VERSION_2_VISION_VERSION = {
+    "1.10.0": "0.11.1",
     "1.9.0": "0.10.0",
     "1.8.0": "0.9.0",
     "1.7.1": "0.8.2",
@@ -24,6 +25,7 @@ PYTORCH_VERSION_2_VISION_VERSION = {
 }
 
 PYTORCH_VERSION_2_AUDIO_VERSION = {
+    "1.10.0": "0.10.0",
     "1.9.0": "0.9.0",
     "1.8.0": "0.8.0",
     "1.7.1": "0.7.2",
@@ -31,6 +33,7 @@ PYTORCH_VERSION_2_AUDIO_VERSION = {
 }
 
 PYTORCH_VERSION_2_CUDA_VERSION = {
+    "1.10.0": ["10.2", "11.3"],
     "1.9.0": ["10.2", "11.1"],
     "1.8.0": ["10.2", "11.1"],
     "1.7.1": ["10.2", "11.0"],

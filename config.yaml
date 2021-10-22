@@ -9,7 +9,7 @@ CUDA_VERSION:
 PYTHON_VERSION:
   "3.8"  # selected from [3.6, 3.7, 3.8, 3.9]
 PYTORCH_VERSION:
-  "1.9.0"  # selected from [1.5.0, 1.5.1, 1.6.0, 1.7.0, 1.7.1, 1.8.0, 1.9.0]
+  "1.10.0"  # selected from [1.5.0, 1.5.1, 1.6.0, 1.7.0, 1.7.1, 1.8.0, 1.9.0, 1.10.0]
 
 IS_INSTALL_TORCHVISION:
   TRUE # whether install torchvision
@@ -26,6 +26,9 @@ APT_PACKAGES:
   - wget
   - vim
   - htop
+  - rsync
+  - psmisc
+  - unzip
   - openssh-server
 
 # packages installed via pip
@@ -35,6 +38,11 @@ PIP_PACKAGES:
   - scipy
   - scikit-learn
   - pandas
+  - tfrecord
+  - pyhocon
+  - fvcore
+  - glances
+  - gpustat
 
 # packages installed via conda, here we use the dict key to refer the channel
 CONDA_PACKAGES:

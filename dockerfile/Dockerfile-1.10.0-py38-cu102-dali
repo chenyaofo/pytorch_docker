@@ -31,7 +31,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux
     /opt/conda/bin/conda clean -afy
 
 RUN CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
-    $CONDA_INSTALL -c conda-forge pycocotools  && \
+    $CONDA_INSTALL -c conda-forge pycocotools graphviz  && \
     echo 'Conda Install Done!'
 
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \

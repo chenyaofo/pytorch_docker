@@ -19,4 +19,10 @@
                 {% raw %}docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
 {% endraw %}
                 docker push {% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{IMAGE_NAME}}:{{IMAGE_TAG}}
+                docker logout
+                {% raw %}docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-hongkong.aliyuncs.com
+{% endraw %}
+                docker tag {% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{IMAGE_NAME}}:{{IMAGE_TAG}} registry.cn-hongkong.aliyuncs.com/{% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{IMAGE_NAME}}:{{IMAGE_TAG}}
+                docker push registry.cn-hongkong.aliyuncs.com/{% raw %}${{secrets.DOCKER_USER}}{% endraw %}/{{IMAGE_NAME}}:{{IMAGE_TAG}}
+                docker logout registry.cn-hongkong.aliyuncs.com
 

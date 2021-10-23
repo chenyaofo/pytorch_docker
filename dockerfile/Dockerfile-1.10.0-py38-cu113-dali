@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.4.1-base-ubuntu20.04
+FROM nvidia/cuda:11.4.1-runtime-ubuntu20.04
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 \
     PATH=/opt/conda/bin:$PATH \
@@ -28,10 +28,9 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
     CONDA_INSTALL="/opt/conda/bin/conda install -y" && \
     $CONDA_INSTALL python=3.8 && \
-    /opt/conda/bin/conda clean -afy
-
-RUN CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
+    CONDA_INSTALL="/opt/conda/bin/conda install --freeze-installed -y" && \
     $CONDA_INSTALL -c conda-forge pycocotools graphviz  && \
+    /opt/conda/bin/conda clean -afy && \
     echo 'Conda Install Done!'
 
 RUN PIP_INSTALL="/opt/conda/bin/pip --no-cache-dir install --upgrade" && \

@@ -72,7 +72,7 @@ def config2dockerfile(config, tag=None):
     if tag is None:
         tag = f'''{config["PYTORCH_VERSION"]}-py{config["PYTHON_VERSION"].replace(".","")}-cu{config["PYTORCH_CUDA_VERSION"].replace(".","")}{'-dali' if config["IS_INSTALL_DALI"] else ''}'''
 
-    extra_pytorch_find_url = "" if config["CUDA_VERSION"] == "10.2" else "-f https://download.pytorch.org/whl/torch_stable.html"
+    extra_pytorch_find_url = "-f https://download.pytorch.org/whl/torch_stable.html"
 
     config["EXTRA_PYTORCH_FIND_URL"] = extra_pytorch_find_url
     if config["CUDA_VERSION"] != "10.2":
@@ -103,12 +103,14 @@ if __name__ == "__main__":
     os.system("rm -rf dockerfile")
     os.makedirs("dockerfile", exist_ok=True)
     jobs = []
-    for cuda_version in ["10.2", "11.4"]:
-        for is_install_dali in [False, True]:
-            c = copy.deepcopy(config)
-            c["CUDA_VERSION"] = cuda_version
-            c["IS_INSTALL_DALI"] = is_install_dali
-            jobs.append(config2dockerfile(c))
+    for pytorch_version in ["1.7.0", "1.8.0", "1.9.0", "1.10.0"]:
+        for cuda_version in ["10.2", "11.4"]:
+            for is_install_dali in [True]:
+                c = copy.deepcopy(config)
+                c["PYTORCH_VERSION"] = pytorch_version
+                c["CUDA_VERSION"] = cuda_version
+                c["IS_INSTALL_DALI"] = is_install_dali
+                jobs.append(config2dockerfile(c))
 
     with open(".github/workflows/dockerimage.yaml", "w") as workflows:
         workflows.write(prefix)

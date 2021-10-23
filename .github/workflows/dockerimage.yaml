@@ -4,7 +4,7 @@ on:
     tags:
     - v*
 jobs:
-    Dockerfile-1_10_0-py38-cu102:
+    Dockerfile-1_7_0-py38-cu102-dali:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
@@ -19,11 +19,151 @@ jobs:
                 docker rmi $(docker image ls -aq)
                 df -h
             - name: Build docker image
-              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu102 -f dockerfile/Dockerfile-1.10.0-py38-cu102 workspace
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.7.0-py38-cu102-dali -f dockerfile/Dockerfile-1.7.0-py38-cu102-dali workspace
             - name: Deploy docker image
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-                docker push ${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu102
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.7.0-py38-cu102-dali
+                docker logout
+                docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-hongkong.aliyuncs.com
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.7.0-py38-cu102-dali registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.7.0-py38-cu102-dali
+                docker push registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.7.0-py38-cu102-dali
+                docker logout registry.cn-hongkong.aliyuncs.com
+
+
+    Dockerfile-1_7_0-py38-cu110-dali:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Free disk space
+              run: |
+                df -h
+                sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell
+                sudo apt-get autoremove -y
+                sudo apt-get clean
+                sudo swapoff -a
+                sudo rm -f /swapfile
+                docker rmi $(docker image ls -aq)
+                df -h
+            - name: Build docker image
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.7.0-py38-cu110-dali -f dockerfile/Dockerfile-1.7.0-py38-cu110-dali workspace
+            - name: Deploy docker image
+              run: |
+                docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.7.0-py38-cu110-dali
+                docker logout
+                docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-hongkong.aliyuncs.com
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.7.0-py38-cu110-dali registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.7.0-py38-cu110-dali
+                docker push registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.7.0-py38-cu110-dali
+                docker logout registry.cn-hongkong.aliyuncs.com
+
+
+    Dockerfile-1_8_0-py38-cu102-dali:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Free disk space
+              run: |
+                df -h
+                sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell
+                sudo apt-get autoremove -y
+                sudo apt-get clean
+                sudo swapoff -a
+                sudo rm -f /swapfile
+                docker rmi $(docker image ls -aq)
+                df -h
+            - name: Build docker image
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.8.0-py38-cu102-dali -f dockerfile/Dockerfile-1.8.0-py38-cu102-dali workspace
+            - name: Deploy docker image
+              run: |
+                docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.8.0-py38-cu102-dali
+                docker logout
+                docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-hongkong.aliyuncs.com
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.8.0-py38-cu102-dali registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.8.0-py38-cu102-dali
+                docker push registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.8.0-py38-cu102-dali
+                docker logout registry.cn-hongkong.aliyuncs.com
+
+
+    Dockerfile-1_8_0-py38-cu111-dali:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Free disk space
+              run: |
+                df -h
+                sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell
+                sudo apt-get autoremove -y
+                sudo apt-get clean
+                sudo swapoff -a
+                sudo rm -f /swapfile
+                docker rmi $(docker image ls -aq)
+                df -h
+            - name: Build docker image
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.8.0-py38-cu111-dali -f dockerfile/Dockerfile-1.8.0-py38-cu111-dali workspace
+            - name: Deploy docker image
+              run: |
+                docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.8.0-py38-cu111-dali
+                docker logout
+                docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-hongkong.aliyuncs.com
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.8.0-py38-cu111-dali registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.8.0-py38-cu111-dali
+                docker push registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.8.0-py38-cu111-dali
+                docker logout registry.cn-hongkong.aliyuncs.com
+
+
+    Dockerfile-1_9_0-py38-cu102-dali:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Free disk space
+              run: |
+                df -h
+                sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell
+                sudo apt-get autoremove -y
+                sudo apt-get clean
+                sudo swapoff -a
+                sudo rm -f /swapfile
+                docker rmi $(docker image ls -aq)
+                df -h
+            - name: Build docker image
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102-dali -f dockerfile/Dockerfile-1.9.0-py38-cu102-dali workspace
+            - name: Deploy docker image
+              run: |
+                docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102-dali
+                docker logout
+                docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-hongkong.aliyuncs.com
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102-dali registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102-dali
+                docker push registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu102-dali
+                docker logout registry.cn-hongkong.aliyuncs.com
+
+
+    Dockerfile-1_9_0-py38-cu111-dali:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Free disk space
+              run: |
+                df -h
+                sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell
+                sudo apt-get autoremove -y
+                sudo apt-get clean
+                sudo swapoff -a
+                sudo rm -f /swapfile
+                docker rmi $(docker image ls -aq)
+                df -h
+            - name: Build docker image
+              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111-dali -f dockerfile/Dockerfile-1.9.0-py38-cu111-dali workspace
+            - name: Deploy docker image
+              run: |
+                docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
+                docker push ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111-dali
+                docker logout
+                docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-hongkong.aliyuncs.com
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111-dali registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111-dali
+                docker push registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.9.0-py38-cu111-dali
+                docker logout registry.cn-hongkong.aliyuncs.com
 
 
     Dockerfile-1_10_0-py38-cu102-dali:
@@ -46,28 +186,11 @@ jobs:
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
                 docker push ${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu102-dali
-
-
-    Dockerfile-1_10_0-py38-cu113:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@master
-            - name: Free disk space
-              run: |
-                df -h
-                sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell
-                sudo apt-get autoremove -y
-                sudo apt-get clean
-                sudo swapoff -a
-                sudo rm -f /swapfile
-                docker rmi $(docker image ls -aq)
-                df -h
-            - name: Build docker image
-              run: docker build -t ${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu113 -f dockerfile/Dockerfile-1.10.0-py38-cu113 workspace
-            - name: Deploy docker image
-              run: |
-                docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-                docker push ${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu113
+                docker logout
+                docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-hongkong.aliyuncs.com
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu102-dali registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu102-dali
+                docker push registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu102-dali
+                docker logout registry.cn-hongkong.aliyuncs.com
 
 
     Dockerfile-1_10_0-py38-cu113-dali:
@@ -90,4 +213,9 @@ jobs:
               run: |
                 docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
                 docker push ${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu113-dali
+                docker logout
+                docker login -u ${{secrets.ALIYUN_DOCKER_USER}} -p ${{secrets.ALIYUN_DOCKER_PASS}} registry.cn-hongkong.aliyuncs.com
+                docker tag ${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu113-dali registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu113-dali
+                docker push registry.cn-hongkong.aliyuncs.com/${{secrets.DOCKER_USER}}/pytorch:1.10.0-py38-cu113-dali
+                docker logout registry.cn-hongkong.aliyuncs.com
 

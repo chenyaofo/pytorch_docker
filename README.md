@@ -99,6 +99,8 @@ rsync
 psmisc
 unzip
 openssh-server
+rsync
+fio
 ```
 
 and following packages via pypi
@@ -123,3 +125,4 @@ and following packages via conda:
 pycocotools
 graphviz
 ```
+
